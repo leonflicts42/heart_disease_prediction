@@ -130,29 +130,31 @@ Importação das bibliotecas essenciais: `pandas`, `numpy`, `matplotlib`, `seabo
 - Ambiente virtual configurado (recomendado)
 
 ### Criar um ambiente virtual compatível com as bibliotecas 
-```py -3.12 -m venv venv
+```powershell
+py -3.12 -m venv venv
 source venv/bin/activate  # No Windows: venv\Scripts\activate
 ```
 
 ### Instalação das dependências
-```pip install -r requirements.txt
+```powershell
+pip install -r requirements.txt
 ```
 ### Ou então:
 
 ### Instalação das dependências
-```bash
+```powershell
 pip install pandas numpy matplotlib seaborn scipy scikit-learn mlflow joblib
 ```
 
 ### Executar o notebook
 
-```bash
+```powershell
 jupyter notebook notebooks/exercicio_experimentacao_mvp.ipynb
 ```
 
 ### Visualizar experimentos no MLFlow
 
-```bash
+```powershell
 mlflow ui
 ```
 Acesse em: [http://localhost:5000](http://localhost:5000)
