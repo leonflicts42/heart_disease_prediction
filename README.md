@@ -130,8 +130,9 @@ Importação das bibliotecas essenciais: `pandas`, `numpy`, `matplotlib`, `seabo
 - Ambiente virtual configurado (recomendado)
 
 ### Criar um ambiente virtual compatível com as bibliotecas 
-py -3.12 -m venv base
+```py -3.12 -m venv venv
 source venv/bin/activate  # No Windows: venv\Scripts\activate
+```
 
 ### Instalação das dependências
 pip install -r requirements.txt
@@ -173,9 +174,3 @@ Acesse em: [http://localhost:5000](http://localhost:5000)
 - [MLFlow Documentation](https://mlflow.org/docs/latest/index.html)
 - [scikit-learn Documentation](https://scikit-learn.org/stable/)
 
-# Crie um ambiente virtual
-py -3.12 -m venv base
-source venv/bin/activate  # No Windows: venv\Scripts\activate
-
-# Instale as dependências
-pip install -r requirements.txt
