@@ -126,11 +126,19 @@ Importação das bibliotecas essenciais: `pandas`, `numpy`, `matplotlib`, `seabo
 
 ### Pré-requisitos
 
-- Python 3.13+
+- Python 3.12
 - Ambiente virtual configurado (recomendado)
 
-### Instalação das dependências
+### Criar um ambiente virtual compatível com as bibliotecas 
+py -3.12 -m venv base
+source venv/bin/activate  # No Windows: venv\Scripts\activate
 
+### Instalação das dependências
+pip install -r requirements.txt
+
+### Ou então:
+
+### Instalação das dependências
 ```bash
 pip install pandas numpy matplotlib seaborn scipy scikit-learn mlflow joblib
 ```
