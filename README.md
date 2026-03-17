@@ -135,8 +135,8 @@ source venv/bin/activate  # No Windows: venv\Scripts\activate
 ```
 
 ### Instalação das dependências
-pip install -r requirements.txt
-
+```pip install -r requirements.txt
+```
 ### Ou então:
 
 ### Instalação das dependências
