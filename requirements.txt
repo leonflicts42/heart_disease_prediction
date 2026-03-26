@@ -1,6 +1,6 @@
 # Dependências do Curso de Introdução ao Ciclo de Vida de Modelos
 
-#Python 3.12
+#Python 3.10
 
 # Core ML libraries
 numpy>=1.24.0

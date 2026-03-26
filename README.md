@@ -1,178 +1,250 @@
-# 🫀 Heart Disease Prediction — MVP de Classificação
+# 📊 Projeto EDA — Guia de Inicialização do Ambiente
 
-> Projeto de experimentação e construção de um modelo baseline (MVP) para predição de doenças cardíacas, utilizando o dataset UCI Heart Disease.
-
----
-
-## 📋 Descrição
-
-Este projeto implementa um pipeline completo de ciência de dados — da análise exploratória até o treinamento e persistência de um modelo de machine learning — com foco em boas práticas de preparação de dados e rastreamento de experimentos com **MLFlow**.
-
-O objetivo é prever a **presença ou ausência de doença cardíaca** em pacientes a partir de variáveis clínicas e laboratoriais.
+Guia completo para garantir o **mesmo ambiente reproduzível** toda vez que ligar o PC e retomar o projeto.
 
 ---
 
 ## 🗂️ Estrutura do Projeto
 
 ```
-projeto/
+meu-projeto-eda/
+├── .venv/                  ← ambiente virtual (gerado automaticamente pelo UV, não commitar)
+├── .vscode/
+│   └── settings.json       ← configurações do VSCode para o projeto
+├── .python-version         ← fixa a versão do Python (gerado pelo UV)
+├── .gitignore
+├── pyproject.toml          ← fonte da verdade das dependências
+├── uv.lock                 ← lockfile com versões exatas (sempre commitar)
 ├── notebooks/
-│   └── exercicio_experimentacao_mvp.ipynb   # Notebook principal
+│   └── eda.ipynb           ← seus notebooks de análise
 ├── data/
-│   └── heart_disease_uci_preprocessed.csv   # Dataset pré-processado (gerado pelo notebook)
-├── models/
-│   └── baseline_model.joblib                # Modelo treinado serializado
+│   ├── raw/                ← dados brutos (nunca modificar)
+│   └── processed/          ← dados processados
 └── README.md
 ```
 
 ---
 
-## 📊 Sobre o Dataset
+## ⚙️ Pré-requisitos — Instalar apenas uma vez
 
-| Atributo        | Valor |
-|----------------|-------|
-| **Fonte**       | [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/45/heart+disease) via [Kaggle](https://www.kaggle.com/datasets/redwankarimsony/heart-disease-data/data) |
-| **Subconjuntos**| Cleveland, Hungarian, Switzerland, VA Long Beach |
-| **Observações** | 920 pacientes |
-| **Features**    | 16 colunas (inclui metadados) |
-| **Target**      | `num` → binarizado em `target` (0 = sem doença, 1 = com doença) |
+Esses passos só precisam ser feitos **uma única vez na máquina**.
 
-### Variáveis do Dataset
+### 1. Instalar o Python 3.12
 
-| Coluna      | Descrição |
-|-------------|-----------|
-| `age`       | Idade do paciente (anos) |
-| `sex`       | Sexo (Male / Female) |
-| `cp`        | Tipo de dor no peito (typical angina, atypical angina, non-anginal, asymptomatic) |
-| `trestbps`  | Pressão arterial em repouso (mmHg) |
-| `chol`      | Colesterol sérico (mg/dl) |
-| `fbs`       | Glicemia em jejum > 120 mg/dl (True/False) |
-| `restecg`   | Resultado do ECG em repouso |
-| `thalch`    | Frequência cardíaca máxima alcançada |
-| `exang`     | Angina induzida por exercício (True/False) |
-| `oldpeak`   | Depressão do segmento ST induzida por exercício |
-| `slope`     | Inclinação do segmento ST de pico |
-| `ca`        | Número de vasos principais coloridos por fluoroscopia (0–3) |
-| `thal`      | Estado talassêmico (normal, fixed defect, reversable defect) |
-| `num`       | Diagnóstico original (0–4); binarizado como `target` |
-
----
-
-## 🔬 Etapas do Pipeline
-
-### 1. Configuração do Ambiente
-Importação das bibliotecas essenciais: `pandas`, `numpy`, `matplotlib`, `seaborn`, `scipy`.
-
-### 2. Carregamento e Inspeção dos Dados
-- Leitura do dataset (920 × 16)
-- Verificação de tipos, shape e primeiras linhas
-
-### 3. Análise Exploratória de Dados (EDA)
-- Distribuição da variável alvo
-- Análise de **missing values** com visualização em gráfico de barras
-- Identificação de **outliers** com IQR e boxplots
-- Análise estatística descritiva das variáveis numéricas
-
-### 4. Preparação dos Dados
-- **Tratamento de valores ausentes**: imputação por mediana (numéricas) e moda (categóricas)
-- **Tratamento de outliers**: remoção com base no método IQR
-- **Binarização do target**: `num > 0` → `target = 1`
-- **Remoção de colunas**: coluna `dataset` descartada
-- **One-hot encoding** das variáveis categóricas: `sex`, `cp`, `restecg`, `slope`, `thal`
-
-### 5. Modelagem e Experimentação (MVP)
-- Divisão treino/teste: 80% / 20% (`random_state=42`)
-- Modelo baseline: **Regressão Logística**
-- Rastreamento de experimentos com **MLFlow**
-
-### 6. Persistência
-- Dataset pré-processado salvo em `data/heart_disease_uci_preprocessed.csv`
-- Modelo serializado via **joblib** em `models/baseline_model.joblib`
-- Modelo também registrado no MLFlow
-
----
-
-## 📈 Resultados do Modelo Baseline
-
-| Métrica            | Valor  |
-|--------------------|--------|
-| **Train Accuracy** | 82,47% |
-| **Test Accuracy**  | 80,43% |
-| **F1 Score**       | 83,02% |
-| **Precision**      | 85,44% |
-| **Recall**         | 80,73% |
-| **Overfitting**    | 0,0204 |
-
-> O modelo apresenta boa generalização, com overfitting mínimo (diferença de ~2% entre treino e teste).
-
----
-
-## 🛠️ Tecnologias e Bibliotecas
-
-| Biblioteca     | Uso |
-|---------------|-----|
-| `pandas`       | Manipulação de dados |
-| `numpy`        | Operações numéricas |
-| `matplotlib`   | Visualizações |
-| `seaborn`      | Visualizações estatísticas |
-| `scipy`        | Análise estatística |
-| `scikit-learn` | Modelagem, métricas e pré-processamento |
-| `mlflow`       | Rastreamento de experimentos |
-| `joblib`       | Serialização do modelo |
-
----
-
-## ⚙️ Como Executar
-
-### Pré-requisitos
-
-- Python 3.12
-- Ambiente virtual configurado (recomendado)
-
-### Criar um ambiente virtual compatível com as bibliotecas 
-```powershell
-py -3.12 -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
+Baixe o instalador em:
+```
+https://www.python.org/downloads/release/python-31210/
 ```
 
-### Instalação das dependências
-```powershell
-pip install -r requirements.txt
-```
-### Ou então:
+Arquivo: `python-3.12.10-amd64.exe`
 
-### Instalação das dependências
-```powershell
-pip install pandas numpy matplotlib seaborn scipy scikit-learn mlflow joblib
-```
+> ✅ Durante a instalação, marque **"Add Python to PATH"**
 
-### Executar o notebook
-
+Verifique a instalação:
 ```powershell
-jupyter notebook notebooks/exercicio_experimentacao_mvp.ipynb
+python --version
+# Python 3.12.x
 ```
 
-### Visualizar experimentos no MLFlow
+### 2. Instalar o UV
 
+Abra o PowerShell como administrador e execute:
 ```powershell
-mlflow ui
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
-Acesse em: [http://localhost:5000](http://localhost:5000)
+
+Feche e abra o terminal novamente, depois verifique:
+```powershell
+uv --version
+```
 
 ---
 
-## 📌 Observações
+## 🚀 Criação do Projeto — Fazer apenas uma vez
 
-- O experimento MLFlow é registrado sob o nome `heart_disease_classification`, com a run `logistic_regression_baseline`.
-- O modelo baseline serve como ponto de partida; próximos experimentos podem explorar algoritmos como Random Forest, Gradient Boosting e SVM.
-- O dataset consolidado da UCI contém dados de quatro centros médicos, o que aumenta a diversidade das amostras mas também a quantidade de valores ausentes.
+```powershell
+# Cria a pasta e inicializa o projeto com Python 3.12
+uv init meu-projeto-eda --python 3.12
+cd meu-projeto-eda
+
+# Fixa a versão do Python no projeto
+uv python pin 3.12
+
+# Adiciona as dependências de EDA
+uv add pandas numpy matplotlib seaborn scipy
+
+# Adiciona o Jupyter para os notebooks
+uv add --dev ipykernel jupyter
+
+# Registra o kernel do projeto no VSCode
+uv run python -m ipykernel install --user --name=meu-projeto-eda --display-name "Python (meu-projeto-eda)"
+```
+
+### Criar o `.gitignore`
+
+```
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+data/raw/
+*.env
+```
+
+### Criar o `.vscode/settings.json`
+
+```json
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "python.terminal.activateEnvironment": true,
+  "jupyter.kernelProviderSettings": {
+    "ms-toolsai.jupyter-hub": {
+      "serverSettings": {}
+    }
+  }
+}
+```
 
 ---
 
-## 📚 Referências
+## 🔁 Rotina Diária — Toda vez que ligar o PC
 
-- [UCI Heart Disease Dataset](https://archive.ics.uci.edu/dataset/45/heart+disease)
-- [Kaggle — Heart Disease Data](https://www.kaggle.com/datasets/redwankarimsony/heart-disease-data/data)
-- [MLFlow Documentation](https://mlflow.org/docs/latest/index.html)
-- [scikit-learn Documentation](https://scikit-learn.org/stable/)
+Esses são os únicos comandos que você precisa rodar ao retomar o projeto.
 
+### Passo 1 — Abra o terminal no VSCode
+
+`Ctrl + `` ` (backtick) — abre o terminal integrado já na pasta do projeto.
+
+### Passo 2 — Sincronize o ambiente
+
+```powershell
+uv sync
+```
+
+> Esse comando garante que o `.venv` está com **exatamente as mesmas versões** definidas no `uv.lock`.  
+> É seguro rodar sempre — se nada mudou, ele termina em segundos.
+
+### Passo 3 — Abra o notebook
+
+No VSCode, abra seu arquivo `.ipynb` e no canto superior direito clique em **"Select Kernel"** e escolha:
+
+```
+Python (meu-projeto-eda)
+```
+
+### Passo 4 — Verifique o ambiente (opcional, mas recomendado)
+
+Na primeira célula do notebook:
+
+```python
+import sys
+print(sys.executable)        # deve apontar para .venv\Scripts\python.exe
+print(sys.version)           # deve mostrar Python 3.12.x
+
+import pandas as pd
+import numpy as np
+print(pd.__version__)
+print(np.__version__)
+```
+
+---
+
+## 📦 Gerenciamento de Dependências
+
+### Adicionar um novo pacote
+
+```powershell
+uv add nome-do-pacote
+
+# Exemplos:
+uv add plotly
+uv add openpyxl
+uv add scikit-learn
+```
+
+### Adicionar pacote apenas para desenvolvimento
+
+```powershell
+uv add --dev nome-do-pacote
+```
+
+### Remover um pacote
+
+```powershell
+uv remove nome-do-pacote
+```
+
+### Ver todos os pacotes instalados
+
+```powershell
+uv pip list
+```
+
+### Importar de um requirements.txt existente
+
+```powershell
+uv add -r requirements.txt
+```
+
+> ⚠️ Sempre rode `uv sync` após qualquer alteração nas dependências.
+
+---
+
+## 🧩 Extensões Recomendadas no VSCode
+
+Instale pelo marketplace do VSCode (`Ctrl+Shift+X`):
+
+| Extensão | ID | Para que serve |
+|---|---|---|
+| Python | `ms-python.python` | Suporte geral ao Python |
+| Jupyter | `ms-toolsai.jupyter` | Executar notebooks `.ipynb` |
+| Pylance | `ms-python.vscode-pylance` | Intellisense e type checking |
+| Ruff | `charliermarsh.ruff` | Linting e formatação |
+
+---
+
+## ❗ Solução de Problemas Comuns
+
+### O kernel não aparece no notebook
+
+```powershell
+# Re-registre o kernel
+uv run python -m ipykernel install --user --name=meu-projeto-eda --display-name "Python (meu-projeto-eda)"
+```
+
+Depois reinicie o VSCode (`Ctrl+Shift+P` → "Developer: Reload Window").
+
+### O `.venv` foi deletado ou corrompido
+
+```powershell
+# Recria tudo do zero a partir do uv.lock
+uv sync
+```
+
+### Erro de versão de pacote incompatível
+
+```powershell
+# Força a sincronização com o lockfile
+uv sync --frozen
+```
+
+### Verificar qual Python está sendo usado
+
+```powershell
+uv run python --version
+uv run python -c "import sys; print(sys.executable)"
+```
+
+---
+
+## 🔒 Por que esse setup garante reprodutibilidade?
+
+| Arquivo | Função |
+|---|---|
+| `.python-version` | Fixa a versão exata do Python (3.12) |
+| `pyproject.toml` | Lista as dependências com versões mínimas |
+| `uv.lock` | Fixa as versões **exatas** de todos os pacotes e suas dependências transitivas |
+
+O `uv sync` lê o `uv.lock` e instala **exatamente** o que está registrado — não importa o dia, a máquina ou quem esteja rodando.
+
+> 💡 **Regra de ouro:** sempre commite o `uv.lock` no Git. Nunca commite o `.venv`.
