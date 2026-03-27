@@ -248,3 +248,8 @@ uv run python -c "import sys; print(sys.executable)"
 O `uv sync` lê o `uv.lock` e instala **exatamente** o que está registrado — não importa o dia, a máquina ou quem esteja rodando.
 
 > 💡 **Regra de ouro:** sempre commite o `uv.lock` no Git. Nunca commite o `.venv`.
+
+Rodar o mlflow localmente: 
+```powershell
+.venv\Scripts\python.exe -m mlflow ui --backend-store-uri file:///C:/mlflow --host 127.0.0.1 --port 5000
+```
